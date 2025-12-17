@@ -288,6 +288,7 @@ nav {
   color: var(--color-text-black);
 }
 
+.form-group select,
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -332,6 +333,24 @@ nav {
 
 .form-submit-btn:active {
   transform: translateY(0px);
+}
+
+.form-reset-btn {
+  background-color: #ffffff;
+  color: var(--color-text-black);
+  padding: 12px 24px;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: 'proxima-nova', sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition-duration: var(--transition-duration);
+}
+
+.form-reset-btn:hover {
+  background-color: #f7f7f7;
+  transform: translateY(-2px);
 }
 
 /* Bilder */
