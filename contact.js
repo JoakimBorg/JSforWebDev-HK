@@ -8,9 +8,6 @@ const messageTextarea = document.getElementById('message');
 const submitBtn = document.querySelector('.form-submit-btn');
 const resetBtn = document.querySelector('.form-reset-btn');
 
-// Character counter element (to be created in JS or HTML)
-let charCounter;
-
 // Validera namn
 function validateName(input) {
     const value = input.value.trim();
@@ -24,9 +21,12 @@ function validateEmail(input) {
     return value === "" ? true : /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
 }
 
+let charCount = 0;
+
 function validateMessage(input) {
 	const string = input.value;
-    return length(string) >= 20;
+    charCount = string.length;
+    return string === "" ? true : charCount >= 20;
 }
 
 function showError(input, message) {
@@ -48,12 +48,7 @@ function clearForm() {
 	// TODO: Rensa alla fält
 }
 
-// Character Counter
-function updateCharCounter() {
-	// TODO: Visa charactercounter
-}
-
-// Form Submission Handler
+// Form Submission 
 form.addEventListener('submit', function(event) {
 	event.preventDefault();
     if (!validateName(firstNameInput)) {
@@ -70,12 +65,12 @@ form.addEventListener('submit', function(event) {
 	
 });
 
-// Reset Handler
+// Reset
 resetBtn.addEventListener('click', function() {
 	// TODO: Rensa felmeddelanden och räknare
 });
 
-// Event listeners för realtidsvalidering och räknare
+// Event listeners för realtidsuppdateringar
 firstNameInput.addEventListener('input', function() {
     if (!validateName(firstNameInput)) {
         clearError(firstNameInput);
@@ -101,6 +96,10 @@ emailInput.addEventListener('input', function() {
     }
 });
 messageTextarea.addEventListener('input', function() {
-	updateCharCounter();
-	// TODO: Validera meddelande i realtid
+	if (!validateMessage(messageTextarea)) {
+        clearError(messageTextarea);
+        showError(messageTextarea, `Fel antal tecken: ${charCount}/20`)
+    } else {
+        clearError(messageTextarea);
+    }
 });
