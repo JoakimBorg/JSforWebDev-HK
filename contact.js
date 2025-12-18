@@ -14,17 +14,14 @@ let charCounter;
 // Validera namn
 function validateName(input) {
     const value = input.value.trim();
-    
-    // Omöjligt att läsa detta, men tog från internet
-    return /^[A-Za-zÅÄÖåäö]+$/.test(value);
+    return value === "" ? true : /^[A-Za-zÅÄÖåäö]+$/.test(value);
 }
 
 // Validera email
 function validateEmail(input) {
     const value = input.value.trim();
-
     // Omöjligt att läsa detta, men tog från internet
-    return /^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(value);
+    return value === "" ? true : /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
 }
 
 function validateMessage(input) {
@@ -96,7 +93,12 @@ lastNameInput.addEventListener('input', function() {
     }
 });
 emailInput.addEventListener('input', function() {
-	// TODO: Validera e-post i realtid
+	if (!validateEmail(emailInput)) {
+        clearError(emailInput);
+        showError(emailInput, "Fel format på mailadressen.")
+    } else {
+        clearError(emailInput);
+    }
 });
 messageTextarea.addEventListener('input', function() {
 	updateCharCounter();
