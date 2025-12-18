@@ -288,12 +288,13 @@ nav {
   color: var(--color-text-black);
 }
 
+
 .form-group select,
 .form-group input,
 .form-group textarea {
   width: 100%;
   padding: 12px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #ccc; /* Normal state */
   border-radius: 4px;
   font-family: 'proxima-nova', sans-serif;
   font-size: 1em;
@@ -301,11 +302,41 @@ nav {
   box-sizing: border-box;
 }
 
+/* Focus state */
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--color-purple);
+  border-color: var(--color-blue);
 }
+
+/* Error state */
+.form-group input.error,
+.form-group textarea.error {
+  border-color: #e53935;
+}
+.form-group .error-message {
+  color: #dc3545;
+  font-size: 0.9em;
+  margin-top: 4px;
+  opacity: 1;
+  max-height: 100px;
+  transition: opacity 0.3s, max-height 0.3s, margin-top 0.3s;
+  overflow: hidden;
+}
+
+.form-group .error-message.hide {
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0;
+}
+
+/* Valid state */
+.form-group input.valid,
+.form-group textarea.valid {
+  border-color: #43a047;
+}
+
+
 
 .form-group textarea {
   resize: vertical;

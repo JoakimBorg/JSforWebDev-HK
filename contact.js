@@ -33,18 +33,23 @@ function showError(input, message, green = false) {
     clearError(input); // Ta bort ev. tidigare felmeddelande först
     const p = document.createElement('p');
     p.textContent = message;
+    p.className = "error-message";
     if (!green) {
-        p.style.color = "#ff0000ff";
-    } else if (green) {
-        p.style.color = "#00ff51ff";
+        p.style.color = "#dc3545";
+        input.classList.remove('valid');
+        input.classList.add('error');
+    } else {
+        p.style.color = "#43a047";
+        input.classList.remove('error');
+        input.classList.add('valid');
     }
-    p.className = "input-error-message";
     input.parentNode.insertBefore(p, input.nextSibling);
 }
 
 function clearError(input) {
+    input.classList.remove('error', 'valid');
     const next = input.nextSibling;
-    if (next && next.classList && next.classList.contains("input-error-message")) {
+    if (next && next.classList && next.classList.contains("error-message")) {
         next.remove();
     }
 }
@@ -75,8 +80,15 @@ form.addEventListener('submit', function(event) {
     }
 	
     if (validated) {
+        const name = firstNameInput.value;
         alert("Formulär skickat!");
         clearForm();
+
+        showError(messageTextarea, `Thank you ${name}! I will contact you soon!`, true);
+        setTimeout(() => {
+            clearError(messageTextarea);
+        }, 3000);
+
     }
 });
 
@@ -87,30 +99,34 @@ resetBtn.addEventListener('click', function() {
 });
 
 // Event listeners för realtidsuppdateringar
+
 firstNameInput.addEventListener('input', function() {
     if (!validateName(firstNameInput)) {
-        showError(firstNameInput, "Ogiltiga tecken i förnamnet.")
+        showError(firstNameInput, "Ogiltiga tecken i förnamnet.");
     } else {
         clearError(firstNameInput);
+        firstNameInput.classList.add('valid');
     }
 });
 lastNameInput.addEventListener('input', function() {
-	if (!validateName(lastNameInput)) {
-        showError(lastNameInput, "Ogiltiga tecken i efternamnet.")
+    if (!validateName(lastNameInput)) {
+        showError(lastNameInput, "Ogiltiga tecken i efternamnet.");
     } else {
         clearError(lastNameInput);
+        lastNameInput.classList.add('valid');
     }
 });
 emailInput.addEventListener('input', function() {
-	if (!validateEmail(emailInput)) {
-        showError(emailInput, "Fel format på mailadressen.")
+    if (!validateEmail(emailInput)) {
+        showError(emailInput, "Fel format på mailadressen.");
     } else {
         clearError(emailInput);
+        emailInput.classList.add('valid');
     }
 });
 messageTextarea.addEventListener('input', function() {
-	if (!validateMessage(messageTextarea)) {
-        showError(messageTextarea, `${charCount}/20 - Ej tillräckligt många tecken.`)
+    if (!validateMessage(messageTextarea)) {
+        showError(messageTextarea, `${charCount}/20 - Ej tillräckligt många tecken.`);
     } else {
         showError(messageTextarea, `${charCount}/20 - Godkänt antal tecken.`, true);
     }
