@@ -11,25 +11,26 @@ const resetBtn = document.querySelector('.form-reset-btn');
 // Validera namn
 function validateName(input) {
     const value = input.value.trim();
-    return value === "" ? true : /^[A-Za-zÅÄÖåäö]+$/.test(value);
+    return value.length === 0 ? true : /^[A-Za-zÅÄÖåäö]+$/.test(value);
 }
 
 // Validera email
 function validateEmail(input) {
     const value = input.value.trim();
-    // Omöjligt att läsa detta, men tog från internet
-    return value === "" ? true : /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
+    // Regex taget från nätet
+    return value.length === 0 ? true : /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
 }
 
 let charCount = 0;
 
 function validateMessage(input) {
-	const string = input.value;
+    const string = input.value.trim();
     charCount = string.length;
-    return string === "" ? true : charCount >= 20;
+    return string.length >= 20;
 }
 
 function showError(input, message) {
+    clearError(input); // Ta bort ev. tidigare felmeddelande först
     const p = document.createElement('p');
     p.textContent = message;
     p.style.color = "#ff0000ff";
@@ -45,7 +46,12 @@ function clearError(input) {
 }
 
 function clearForm() {
-	// TODO: Rensa alla fält
+    form.reset();
+    // Ta bort felmeddelanden
+    clearError(firstNameInput);
+    clearError(lastNameInput);
+    clearError(emailInput);
+    clearError(messageTextarea);
 }
 
 // Form Submission 
@@ -67,13 +73,13 @@ form.addEventListener('submit', function(event) {
 
 // Reset
 resetBtn.addEventListener('click', function() {
-	// TODO: Rensa felmeddelanden och räknare
+	charCount = 0;
+    clearForm();
 });
 
 // Event listeners för realtidsuppdateringar
 firstNameInput.addEventListener('input', function() {
     if (!validateName(firstNameInput)) {
-        clearError(firstNameInput);
         showError(firstNameInput, "Ogiltiga tecken i förnamnet.")
     } else {
         clearError(firstNameInput);
@@ -81,7 +87,6 @@ firstNameInput.addEventListener('input', function() {
 });
 lastNameInput.addEventListener('input', function() {
 	if (!validateName(lastNameInput)) {
-        clearError(lastNameInput);
         showError(lastNameInput, "Ogiltiga tecken i efternamnet.")
     } else {
         clearError(lastNameInput);
@@ -89,7 +94,6 @@ lastNameInput.addEventListener('input', function() {
 });
 emailInput.addEventListener('input', function() {
 	if (!validateEmail(emailInput)) {
-        clearError(emailInput);
         showError(emailInput, "Fel format på mailadressen.")
     } else {
         clearError(emailInput);
@@ -97,7 +101,6 @@ emailInput.addEventListener('input', function() {
 });
 messageTextarea.addEventListener('input', function() {
 	if (!validateMessage(messageTextarea)) {
-        clearError(messageTextarea);
         showError(messageTextarea, `Fel antal tecken: ${charCount}/20`)
     } else {
         clearError(messageTextarea);
