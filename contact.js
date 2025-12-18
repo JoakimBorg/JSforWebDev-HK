@@ -33,11 +33,18 @@ function validateMessage(input) {
 }
 
 function showError(input, message) {
-	// TODO: Visa felmeddelande
+    const p = document.createElement('p');
+    p.textContent = message;
+    p.style.color = "#ff0000ff";
+    p.className = "input-error-message";
+    input.parentNode.insertBefore(p, input.nextSibling);
 }
 
 function clearError(input) {
-	// TODO: Ta bort felmeddelande
+    const next = input.nextSibling;
+    if (next && next.classList && next.classList.contains("input-error-message")) {
+        next.remove();
+    }
 }
 
 function clearForm() {
@@ -73,10 +80,20 @@ resetBtn.addEventListener('click', function() {
 
 // Event listeners för realtidsvalidering och räknare
 firstNameInput.addEventListener('input', function() {
-	// TODO: Validera förnamn i realtid
+    if (!validateName(firstNameInput)) {
+        clearError(firstNameInput);
+        showError(firstNameInput, "Ogiltiga tecken i förnamnet.")
+    } else {
+        clearError(firstNameInput);
+    }
 });
 lastNameInput.addEventListener('input', function() {
-	// TODO: Validera efternamn i realtid
+	if (!validateName(lastNameInput)) {
+        clearError(lastNameInput);
+        showError(lastNameInput, "Ogiltiga tecken i efternamnet.")
+    } else {
+        clearError(lastNameInput);
+    }
 });
 emailInput.addEventListener('input', function() {
 	// TODO: Validera e-post i realtid
