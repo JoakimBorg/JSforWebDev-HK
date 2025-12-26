@@ -21,6 +21,7 @@ function validateEmail(input) {
     return value.length === 0 ? true : /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
 }
 
+// Validera meddelande
 let charCount = 0;
 
 function validateMessage(input) {
@@ -29,6 +30,7 @@ function validateMessage(input) {
     return string.length >= 20;
 }
 
+// Visa errors
 function showError(input, message, green = false) {
     clearError(input); // Ta bort ev. tidigare felmeddelande först
     const p = document.createElement('p');
@@ -46,6 +48,7 @@ function showError(input, message, green = false) {
     input.parentNode.insertBefore(p, input.nextSibling);
 }
 
+// Rensa errors
 function clearError(input) {
     input.classList.remove('error', 'valid');
     const next = input.nextSibling;
@@ -54,6 +57,7 @@ function clearError(input) {
     }
 }
 
+// Rensa form och errors
 function clearForm() {
     form.reset();
     // Ta bort felmeddelanden
@@ -98,8 +102,7 @@ resetBtn.addEventListener('click', function() {
     clearForm();
 });
 
-// Event listeners för realtidsuppdateringar
-
+// Event listeners
 firstNameInput.addEventListener('input', function() {
     if (!validateName(firstNameInput)) {
         showError(firstNameInput, "Ogiltiga tecken i förnamnet.");
@@ -108,6 +111,7 @@ firstNameInput.addEventListener('input', function() {
         firstNameInput.classList.add('valid');
     }
 });
+
 lastNameInput.addEventListener('input', function() {
     if (!validateName(lastNameInput)) {
         showError(lastNameInput, "Ogiltiga tecken i efternamnet.");
@@ -116,6 +120,7 @@ lastNameInput.addEventListener('input', function() {
         lastNameInput.classList.add('valid');
     }
 });
+
 emailInput.addEventListener('input', function() {
     if (!validateEmail(emailInput)) {
         showError(emailInput, "Fel format på mailadressen.");
@@ -124,6 +129,7 @@ emailInput.addEventListener('input', function() {
         emailInput.classList.add('valid');
     }
 });
+
 messageTextarea.addEventListener('input', function() {
     if (!validateMessage(messageTextarea)) {
         showError(messageTextarea, `${charCount}/20 - Ej tillräckligt många tecken.`);
