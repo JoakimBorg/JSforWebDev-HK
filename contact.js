@@ -27,7 +27,7 @@ let charCount = 0;
 function validateMessage(input) {
     const string = input.value.trim();
     charCount = string.length;
-    return string.length >= 20;
+    return string.length >= 20 && string.length <= 40;
 }
 
 // Visa errors
